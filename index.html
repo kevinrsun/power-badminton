@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive Experiment</title>
+  <script src="./libs/p5.js"></script>
+  <script src="./libs/p5.sound.min.js"></script>
+  <script src="./libs/dat.gui.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="joy-cons.css" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+  <script type="text/javascript" src="simple.js"></script>
+  <script type="module" src="index.js"></script>
+
+  <button id="connect-joy-cons" type="button">Connect Joy-Con</button>
+  <figure>
+  <div id="joycon-l" class="joycon productId8198">
+    <!-- <div id="joystick-left" class="joystick"></div> -->
+    <div class="buttons">
+      <button id="up"></button>
+      <button id="left"></button>
+      <button id="down"></button>
+      <button id="right"></button>
+    </div>
+    <span id="minus"></span>
+    <i id="capture"></i>
+    <strong class="back-buttons" id="l"></strong>
+  </div>
+  <div id="joycon-r" class="joycon productId8199">
+    <div id="joystick-right" class="joystick"></div>
+    <div class="buttons">
+      <button id="x"></button>
+      <button id="y"></button>
+      <button id="b"></button>
+      <button id="a"></button>
+    </div>
+    <span id="plus"></span>
+    <i id="home"></i>
+    <strong class="back-buttons" id="r"></strong>
+  </div>
+</figure>
+</body>
+</html>
