@@ -1,60 +1,43 @@
-let gui = new dat.GUI();
-let mic;
-let started = false;
-let particles = [];
-let particleSize;
-let num;
-let mouse;
-let micSen;
-let vol;
+let gameStarted = false;
+let transitionComplete = false;
+let transitionTime = 2000;
+let transitionStartTime;
+let stars = [];
+let retroBackground;
+let canvasSky;
+let canvasSun;
 
-function setup() {
-  gui.width = windowWidth / 3;
+let colours = {};
 
-  window.background_color = "#000000";
-  window.particles = 10;
-  window.particleSize = 15;
-  window.opacity = 200;
-  window.mouseEnabled = false;
-  window.micSenEnabled = false;
-
-  createCanvas(windowWidth, windowHeight);
-
-  gui.addColor(window, "background_color").name("Background Color");
-  gui.add(window, "particles", 0, 100).name("Number of Particles").onChange(createParticles);
-  gui.add(window, "particleSize", 5, 50).name("Particle Size").onChange(createParticles);
-  gui.add(window, "opacity", 0, 255).name("Opacity");
-  mouse = gui.add(window, "mouseEnabled").name("Mouse Enabled");
-  micSen = gui.add(window, "micSenEnabled").name("Mic Volume Reactive");
-
-  mic = new p5.AudioIn();
-  mic.start();
-
-  createParticles();
+function preload() {
+  retroBackground = loadImage('assests/retro_background.png');
 }
 
-function createParticles() {
-  num = parseInt(window.particles);
-  particleSize = window.particleSize;
+function setup() {
+  createCanvas(windowWidth, windowHeight);
 
-  for (let i = 0; i < num; i++) {
-    if(particles[i] == null) {
-      let pull = random(0.005, 0.05);
-      let clr = color(random(64, 255), random(64, 255), random(64, 255));
-
-      particles[i] = new Particle(pull, clr);      
-    }
+  // Create stars for start game transition
+  for (let i = 0; i < 100; i++) {
+    stars.push(new Star());
   }
+
+  colours = [
+    color(8, 44, 127), // Night blue
+    color(0, 255, 248), // Neon blue
+    color(255, 0, 253), // Neon pink
+    color(0, 29, 95), // Dark blue
+  ];
+
+  canvasSky = drawSky();
+  canvasSun = drawSun();
 }
 
 function keyPressed() {
   if (keyCode === 32) {
     console.log("space");
-    mouse.setValue(!window.mouseEnabled);
   }
   if (keyCode === 77) {
     console.log("m");
-    micSen.setValue(!window.micSenEnabled);
   }
 }
 
@@ -77,101 +60,134 @@ function hexToRgb(hex) {
   return color(r, g, b);
 }
 
+function startGame() {
+  document.getElementById("start-page").remove();
+  gameStarted = true;
+  transitionStartTime = millis();
+
+}
+
 function draw() {
-  let background_clr = hexToRgb(window.background_color);
-  background(background_clr.levels[0], background_clr.levels[1], background_clr.levels[2], window.opacity);
-  noStroke();
 
-  textSize(23);
-  textAlign(CENTER);
-  fill(inverseColor(hexToRgb(window.background_color)));
-  if(!window.mouseEnabled && !window.micSenEnabled) {
-    text("Use controls on the top-right to adjust Particle settings", width / 2, height / 20);
-    text("Press Spacebar to enable Mouse Interaction", width / 2, height / 12.5);
-    text("Press M to enable Microphone Input Interaction", width / 2, height / 9);
-  } else {
-    text("Use controls on the top-right to adjust Particle settings", width / 2, height / 20);
-    if(window.mouseEnabled) {
-      text("Press Spacebar to disable Mouse Interaction", width / 2, height / 12.5);
-      text("Press Left-click to pull Particles", width / 5, height / 20);
-      text("Press Right-click to push Particles", width / 5, height / 12.5);
+  if(gameStarted) {
+    if(transitionComplete) {
+      
+      translate(0, -400, -2000);
+      texture(canvasSky);
+      plane(3400, 2600);
+
+      fill(0, 0, 0, 0);
+      texture(canvasSun);
+      plane(1500);
+      translate(0, 400, 2000);
+
+      // background(retroBackground, 180);
+
+      for (let i = 0; i < stars.length; i++) {
+        stars[i].update();
+        stars[i].display();
+      }
     } else {
-      text("Press Spacebar to enable Mouse Interaction", width / 2, height / 12.5);
+      // Show transition animation
+      background(0);
+      
+      // Display the passing stars/warp effect
+      for (let i = 0; i < stars.length; i++) {
+        stars[i].update();
+        stars[i].display();
+      }
+      
+      let elapsedTime = millis() - transitionStartTime;
+      if (elapsedTime >= transitionTime) {
+        transitionComplete = true;
+      }
     }
-
-    if (window.micSenEnabled) {
-      text("Particle size reacts to Microphone Input", width / 5, height / 7);
-      text("Press M to disable Microphone Input Interaction", width / 2, height / 9);
-    } else {
-      text("Press M to enable Microphone Input Interaction", width / 2, height / 9);
-    }
-  }
-
-  for (let i = 0; i < num; i++) {
-    particles[i].display();
-    particles[i].move();
-  }
-
-  if (num != parseInt(window.particles)) {
-    if(num < parseInt(window.particles)) {
-      createParticles();
-    } else {
-      num = parseInt(window.particles);
-    }
-  }
-
-  if(window.micSenEnabled) {
-    let level = mic.getLevel();
-    vol = map(level, 0, 1, 0, 200);
-  } else {
-    vol = 0;
   }
 }
 
-class Particle {
-  constructor(pull, clr) {
-    this.position = createVector(random(0, width), random(0, height));
-    this.diameter = random(0, 15);
-    this.pull = pull;
-    this.col = clr;
-    this.radius = this.diameter / 2;
-    this.velocity = createVector(random(-15, 15), random(-15, 15));
+class Star {
+  constructor() {
+    this.x = random(-width, width); // Start the stars outside the canvas
+    this.y = random(-height, height); // Start the stars outside the canvas
+    this.z = random(width); // Randomize the initial depth
+    this.pz = this.z; // Store the previous z value for calculating the warp effect
+  }
+
+  update() {
+    this.z -= 10; // Move the stars toward the viewer
+
+    // Reset the stars once they move past the viewer
+    if (this.z < 1) {
+      this.x = random(-width, width);
+      this.y = random(-height, height);
+      this.z = random(width);
+      this.pz = this.z;
+    }
   }
 
   display() {
-    fill(this.col);
-    circle(this.position.x, this.position.y, this.diameter + particleSize + vol);
+    fill(255);
+    noStroke();
+
+    const sx = map(this.x / this.z, 0, 1, 0, width);
+    const sy = map(this.y / this.z, 0, 1, 0, height);
+    const r = map(this.z, 0, width, 8, 0);
+    ellipse(sx, sy, r, r);
+
+    const px = map(this.x / this.pz, 0, 1, 0, width);
+    const py = map(this.y / this.pz, 0, 1, 0, height);
+    this.pz = this.z;
+
+    stroke(255);
+    line(px, py, sx, sy);
+  }
+}
+
+function drawSky() {
+  const horizon = 1000;
+  const sky = createGraphics(width, height);
+
+  // Draw gradient sky
+  sky.noFill();
+  for (let i = 0; i <= horizon; i++) {
+    const inter = map(i, 0, horizon, 0, 1);
+    const c = lerpColor(colours[0], color(0, 0 ,0), inter);
+    sky.stroke(c);
+    sky.line(0, i, width, i);
   }
 
-  move() {
-    if(mouseIsPressed && mouseEnabled) {
-      if (mouseButton === LEFT) {
-          this.velocity.x = (mouseX - this.position.x) * this.pull;
-          this.position.x += this.velocity.x;
+  // Add some stars
+  sky.noStroke();
+  sky.fill(255, 255, 255, random(100, 255));
+  for (let i = 0; i < 100; i++) {
+    sky.ellipse(random(0, 1100), random(0, 550), random(1, 5));
+  }
 
-          this.velocity.y = (mouseY - this.position.y) * this.pull;
-          this.position.y += this.velocity.y;
-      }
+  return sky;
+}
 
-      if (mouseButton === RIGHT) {
-        if(this.position.x < windowWidth - this.radius && this.position.x > 0 + this.radius && this.position.y < windowHeight - this.radius && this.position.y > 0 + this.radius) {
-          this.velocity.x = (mouseX - this.position.x) * -this.pull;
-          this.position.x += this.velocity.x;
+// Draw gradient sun
+function drawSun() {
+  const sun = createGraphics(1000, 1000);
+  sun.noFill();
 
-          this.velocity.y = (mouseY - this.position.y) * -this.pull;
-          this.position.y += this.velocity.y;
-        }
-      }
+  for (let i = 0; i <= sun.height; i++) {
+    // Which colour?
+    if (i % 10 >= 0 && i % 10 < 5) {
+      sun.stroke(colours[2]);
     } else {
-      if(this.position.x > windowWidth - this.radius || this.position.x < 0 + this.radius) {
-        this.velocity.x = -this.velocity.x;
-      }
-      if(this.position.y > windowHeight - this.radius || this.position.y < 0 + this.radius) {
-        this.velocity.y = -this.velocity.y;
-      }
-
-      this.position.x += this.velocity.x;
-      this.position.y += this.velocity.y;
+      sun.stroke(colours[3]);
     }
+
+    // Calc colour
+    const inter = map(i, 0, sun.height, 0, 1);
+
+    // Calc circle
+    const s = i * 2;
+    const r = sun.width;
+    const lineWidth = Math.sqrt((2 * s * r) - (s * s));
+    const offset = (sun.width / 2) - (lineWidth / 2);
+    sun.line(offset, i, lineWidth + offset, i);
   }
+  return sun;
 }
