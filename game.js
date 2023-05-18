@@ -89,13 +89,12 @@ function draw() {
     if(transitionComplete) {
       if(setupFinished) {
         stage.drawSky();
+        stage.drawStage(retroBackground);
         for (let i = 0; i < stars.length; i++) {
           stars[i].update();
           stars[i].display();
         }
       } else {
-        stage.drawStage(retroBackground);
-        
         console.log();
         
         // plane(3400, 2600);

@@ -6,7 +6,7 @@ class Stage {
     color(0, 29, 95), // Dark blue
     ];
 
-    horizon = 850;
+    horizon = height*0.6153;
 
     constructor() {
 
@@ -27,26 +27,29 @@ class Stage {
             line(xMin, yMin + i, xMax, yMin + i);
         }
 
-        fill(0,0,0);
-        line(xMin, 0.6153*yMax, 0.2816*xMin, 0.6153*yMax);
+        translate(-width/2, -height/2);
+        fill(0, 0, 0);
+        noStroke();
+        beginShape();
+        vertex(this.processPointX(0), this.processPointY(886));
+        vertex(this.processPointX(0), this.processPointY(1367));
+        vertex(this.processPointX(370), this.processPointY(1367));
+        vertex(this.processPointX(727), this.processPointY(886));
+        endShape();
+        beginShape();
+        vertex(this.processPointX(0), this.processPointY(1367));
+        vertex(this.processPointX(0), this.processPointY(1440));
+        vertex(this.processPointX(2560), this.processPointY(1440));
+        vertex(this.processPointX(2560), this.processPointY(1367));
+        endShape();
+        beginShape();
+        vertex(this.processPointX(1879), this.processPointY(886));
+        vertex(this.processPointX(2102), this.processPointY(1367));
+        vertex(this.processPointX(2560), this.processPointY(1367));
+        vertex(this.processPointX(2560), this.processPointY(886));
+        endShape();
 
-        // beginShape();
-        // vertex(xMin, 0.6153*yMax);
-        // vertex(0, 35);
-        // vertex(10, 10);
-        // vertex(35, 0);
-        // vertex(10, -8);
-        // vertex(0, -35);
-        // vertex(-10, -8);
-        // vertex(-35, 0);
-        // endShape();
-
-        // Add some stars
-        // noStroke();
-        // fill(255, 255, 255, random(100, 255));
-        // for (let i = 0; i < 100; i++) {
-        //     ellipse(random(0, 1100), random(0, 550), random(1, 5));
-        // }
+        translate(width/2, height/2);
     }
 
     // Draw gradient sun
@@ -85,5 +88,13 @@ class Stage {
         rect(0, 0, width, height);
         console.log(width);
         console.log(height);
+    }
+
+    processPointX(x) {
+        return width*(x/2560);
+    }
+
+    processPointY(y) {
+        return height*(y/1440);
     }
 }

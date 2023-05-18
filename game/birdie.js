@@ -1,6 +1,6 @@
 class Birdie {
 
-    constructor(p5, spriteImage) {
+    constructor(assest) {
         this.p5 = p5;
         this.gravity = 0.5;
         this.velocity = 0;
