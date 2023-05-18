@@ -126,6 +126,28 @@ function draw() {
   }
 }
 
+function win_logic(){
+  if (player1Score == 2){
+    winningCondition("Player1");
+  }
+
+  else if (player2score == 2){
+    winningCondition("Player2")
+  }
+}
+
+function winningCondition(str){
+  if (str == "Player1"){
+    sessionStorage.setItem("Win", "Player1");
+    window.location = "/podium.html"
+  }
+  else{
+    sessionStorage.setItem("Win", "Player2");
+    window.location = "/podium.html"
+  }
+}
+
+
 // function drawSky() {
 //   const horizon = 1000;
 //   const sky = createGraphics(width, height);

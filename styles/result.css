@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    color: white;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #160824;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(transparent,#08234d);
+    border-radius: 6px;
+}
+
+.pod{
+    display: flex;
+    justify-content: center;
+}
+
+.podium p {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.podium.img {
+    text-align: center;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+}

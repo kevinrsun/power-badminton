@@ -1,29 +1,48 @@
 class Stage {
-  colours = [
+    colours = [
     color(8, 44, 127), // Night blue
     color(0, 255, 248), // Neon blue
     color(255, 0, 253), // Neon pink
     color(0, 29, 95), // Dark blue
-  ];
+    ];
 
-  horizon = 850;
+    horizon = 850;
 
-  constructor() {
-    
-  }
+    constructor() {
+
+    }
 
     drawSky() {
         // Draw gradient sky
+        let xMin = -width/2;
+        let xMax =  width/2
+        let yMin = -height/2;
+        let yMax =  height/2;
+        
         noFill();
         for (let i = 0; i <= this.horizon; i++) {
             const inter = map(i, 0, this.horizon, 0, 1);
             const c = lerpColor(this.colours[0], color(0, 0 ,0), inter);
             stroke(c);
-            line(-width/2, -height/2 + i, width, -height/2 + i);
+            line(xMin, yMin + i, xMax, yMin + i);
         }
 
+        fill(0,0,0);
+        line(xMin, 0.6153*yMax, 0.2816*xMin, 0.6153*yMax);
+
+        // beginShape();
+        // vertex(xMin, 0.6153*yMax);
+        // vertex(0, 35);
+        // vertex(10, 10);
+        // vertex(35, 0);
+        // vertex(10, -8);
+        // vertex(0, -35);
+        // vertex(-10, -8);
+        // vertex(-35, 0);
+        // endShape();
+
         // Add some stars
-        noStroke();
+        // noStroke();
         // fill(255, 255, 255, random(100, 255));
         // for (let i = 0; i < 100; i++) {
         //     ellipse(random(0, 1100), random(0, 550), random(1, 5));
@@ -59,11 +78,8 @@ class Stage {
     // Draw stage
     drawStage(img) {
 
-        const clearColor = color(0, 0, 0, 0); // Set the alpha value to 0 for full transparency
-        clear();
-        background(clearColor);
-
         // translate(width/2, height/2);
+        noStroke();
         texture(img);
         rectMode(CENTER);
         rect(0, 0, width, height);

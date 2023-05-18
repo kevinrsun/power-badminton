@@ -92,7 +92,7 @@ const visualize = (joyCon, packet) => {
       document.querySelector('#acc-y-left').value = yLeft;
 
       document.querySelector('#z-left').textContent = "Current Z is: " + zLeft + "\nHighest Z is: " + bestZLeft + "\nLowest Z is: " + lowZLeft + "\nRange is: " + (bestZLeft - lowZLeft);
-      if(zLeft > bestZLeft) {s
+      if(zLeft > bestZLeft) {
         // Avg grav is 4
         bestZLeft = zLeft;
       } if(zLeft < lowZLeft) {
