@@ -86,8 +86,6 @@ class Stage {
         texture(img);
         rectMode(CENTER);
         rect(0, 0, width, height);
-        console.log(width);
-        console.log(height);
     }
 
     processPointX(x) {

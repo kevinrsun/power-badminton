@@ -1,29 +1,19 @@
 class Birdie {
 
-    constructor(assest) {
-        this.p5 = p5;
-        this.gravity = 0.5;
+    constructor(asset) {
+        this.w = 700
+        this.h = 450
         this.velocity = 0;
-        this.lift = -8;
-        this.birdPosition = { y: (CANVAS_HEIGHT / 2) - (BIRDSIZE.Width / 2), x: (CANVAS_WIDTH / 2) - (BIRDSIZE.Height / 2) };
-        this.image = spriteImage;
-        this.frame = 0;
-        this.dead = false;
+        // this.birdPosition = { y: (CANVAS_HEIGHT / 2) - (BIRDSIZE.Width / 2), x: (CANVAS_WIDTH / 2) - (BIRDSIZE.Height / 2) };
+        this.img = asset;
         this.birdRotate = { angle: 0, xOffset: 0, yOffset: 0 };
     }
 
-    draw() {
-        if (this.dead === false)
-            this.frame++;
-        let animationFrame = (Math.floor(this.frame / 8)) % 4;
+    start() {
 
-        this.p5.push();
-
-        this.p5.translate(this.birdPosition.x + this.birdRotate.xOffset, this.birdPosition.y + this.birdRotate.yOffset);
-        this.p5.rotate(Math.PI / 180 * this.birdRotate.angle);
-        this.p5.image(this.image, 0, 0, BIRDSIZE.Width, BIRDSIZE.Height, BIRDANIMATIONFRAME[animationFrame], 0, BIRDSIZE.Width, BIRDSIZE.Height);
-
-        this.p5.pop();
+        angleMode(DEGREES);
+        rotateX(160);
+        image(this.img,0,0)
     }
 
     jump() {
@@ -61,5 +51,22 @@ class Birdie {
 
         if (this.velocity > 15)
             this.velocity = 15;
+    }
+
+    display() {
+        fill(255);
+        noStroke();
+
+        const sx = map(this.x / this.z, 0, 1, 0, width);
+        const sy = map(this.y / this.z, 0, 1, 0, height);
+        const r = map(this.z, 0, width, 8, 0);
+        ellipse(sx, sy, r, r);
+
+        const px = map(this.x / this.pz, 0, 1, 0, width);
+        const py = map(this.y / this.pz, 0, 1, 0, height);
+        this.pz = this.z;
+
+        stroke(255);
+        line(px, py, sx, sy);
     }
 }

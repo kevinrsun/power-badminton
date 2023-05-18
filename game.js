@@ -16,12 +16,13 @@ let colours = {};
 let accelValues;
 
 function preload() {
-  retroBackground = loadImage('assests/retro_background.png');
+  retroBackground = loadImage('assets/retro_background.png');
+  birdieImg = loadImage('assets/birdie.png');
   debugTools = document.getElementById('debug');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   
   startGame();
 
@@ -31,6 +32,7 @@ function setup() {
   }
 
   stage = new Stage();
+  birdie = new Birdie(birdieImg);
 
   // colours = [
   //   color(8, 44, 127), // Night blue
@@ -94,6 +96,12 @@ function draw() {
           stars[i].update();
           stars[i].display();
         }
+
+        birdie.start();
+
+        // Bird starting - Random direction
+        // Pass in speed value and direction
+
       } else {
         
         // plane(3400, 2600);
@@ -144,53 +152,3 @@ function winningCondition(str){
     window.location = "/podium.html"
   }
 }
-
-
-// function drawSky() {
-//   const horizon = 1000;
-//   const sky = createGraphics(width, height);
-
-//   // Draw gradient sky
-//   sky.noFill();
-//   for (let i = 0; i <= horizon; i++) {
-//     const inter = map(i, 0, horizon, 0, 1);
-//     const c = lerpColor(colours[0], color(0, 0 ,0), inter);
-//     sky.stroke(c);
-//     sky.line(0, i, width, i);
-//   }
-
-//   // Add some stars
-//   sky.noStroke();
-//   sky.fill(255, 255, 255, random(100, 255));
-//   for (let i = 0; i < 100; i++) {
-//     sky.ellipse(random(0, 1100), random(0, 550), random(1, 5));
-//   }
-
-//   return sky;
-// }
-
-// // Draw gradient sun
-// function drawSun() {
-//   const sun = createGraphics(1000, 1000);
-//   sun.noFill();
-
-//   for (let i = 0; i <= sun.height; i++) {
-//     // Which colour?
-//     if (i % 10 >= 0 && i % 10 < 5) {
-//       sun.stroke(colours[2]);
-//     } else {
-//       sun.stroke(colours[3]);
-//     }
-
-//     // Calc colour
-//     const inter = map(i, 0, sun.height, 0, 1);
-
-//     // Calc circle
-//     const s = i * 2;
-//     const r = sun.width;
-//     const lineWidth = Math.sqrt((2 * s * r) - (s * s));
-//     const offset = (sun.width / 2) - (lineWidth / 2);
-//     sun.line(offset, i, lineWidth + offset, i);
-//   }
-//   return sun;
-// }
