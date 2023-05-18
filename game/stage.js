@@ -3,13 +3,16 @@ class Stage {
     color(8, 44, 127), // Night blue
     color(0, 255, 248), // Neon blue
     color(255, 0, 253), // Neon pink
+    color(106, 0, 255), // Purple
+    color(138, 85, 237), // Lav
     color(0, 29, 95), // Dark blue
     ];
+    skyColor;
 
     horizon = height*0.6153;
 
     constructor() {
-
+        this.skyColor = Math.floor(Math.random() * 6);
     }
 
     drawSky() {
@@ -19,10 +22,9 @@ class Stage {
         let yMin = -height/2;
         let yMax =  height/2;
         
-        noFill();
         for (let i = 0; i <= this.horizon; i++) {
             const inter = map(i, 0, this.horizon, 0, 1);
-            const c = lerpColor(this.colours[0], color(0, 0 ,0), inter);
+            const c = lerpColor(this.colours[this.skyColor], color(0, 0 ,0), inter);
             stroke(c);
             line(xMin, yMin + i, xMax, yMin + i);
         }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Podium</title>
+  <link rel="stylesheet" href="styles/result.css">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+    <audio autoplay>
+        <source src = "assets/win.mp3" type="audio/mpeg">
+    </audio>
+
+    
+    <h1 class="main_heading">Winner is Player 2</h1>
+
+    <div id="flex">
+        <div class = "podium">
+            <P></P>
+        </div>
+        <winner>
+            <img id="winner-image" src="assets/player2.png" alt="Winner Image">
+        </winner>
+        <loser>
+            <img id="loser-image" src="assets/player1.png" alt="Winner Image">
+        </loser>
+        <div class = "pod">
+            <img src = "assets/podium.png" alt="image">
+        </div>
+  </div>
+  <div id="flex">
+  <a href="index.html" class="heading btn button">REMATCH</a>
+  </div>
+</body>
+</html>
