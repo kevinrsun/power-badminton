@@ -1,0 +1,119 @@
+@import "https://fonts.googleapis.com/css?family=Bree+Serif&display=swap";
+
+body {
+    margin: 0;
+    color: white;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-image: url('../assests/menu_background.png');
+}
+
+.main_heading{
+    margin-bottom:50px;
+    font-size:50px;
+}
+
+.list{
+    list-style-type: bullet;
+    font-size:30px;
+    margin-left:300px;
+}
+.list li{
+    margin-bottom:10px;
+}
+ol {
+    font-family: 'Bree Serif', serif;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+ul {
+    text-align: center;
+    text-align: justify;
+    text-justify: inter-word;
+    margin: 0% 10%;
+    font-size: 1.5em;
+}
+
+h1 {
+    font-family: 'Bree Serif', serif;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+h2 {
+    font-family: 'Bree Serif', serif;
+    margin-left: 10px;
+    font-size: 2em;
+    text-align: center;
+}
+
+#flex  {
+   display: flex;
+   justify-content: center;
+   font-size: 1.5rem;
+   padding-bottom: 19.5em;
+}
+
+button {
+    content: "";
+    display:inline-block;
+    position: absolute;
+    cursor: pointer;
+
+    font-family: 'Bree Serif', serif;
+    font-size: 0.9em;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 30px;
+    font-weight: lighter;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 200px;
+    margin-top: 5%;
+}
+
+.button {
+    background-color: transparent;
+    color: white;
+    margin-right: 15px;
+    border: 1px solid white;
+    position:relative;
+}
+
+.button:hover{
+    opacity:0.7;
+}
+
+.heading::after{
+    content: "";
+    display:inline-block;
+    height:3px;
+    width:100%;
+    position: absolute;
+    top:90px;
+    
+    left:0;
+    animation-name:project;
+    animation-duration:6s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transition: transform 0.25s linear;
+    /* background: white; */
+    background:linear-gradient(#a1c4fd, #c2e9fb);
+}
+
+@keyframes project{
+    0% {transform: scaleX(1);}
+    15%{ transform: scaleX(0.7);}
+    30% { transform: scaleX(0.4);}
+    45% { transform: scaleX(0.1);}
+    60% { transform: scaleX(0.4);}
+    75% { transform: scaleX(0.7);}
+    90% { transform: scaleX(0.9);}
+
+    100%{ transform: scaleX(1);}
+  }

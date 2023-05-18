@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Power Badminton</title>
+  <script src="./libs/p5.js"></script>
+  <!-- <script src="./libs/p5.sound.min.js"></script> -->
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+      color: white;
+    }
+
+    
+  </style>
+</head>
+<body oncontextmenu="return false;">
+  <script type="text/javascript" src="game.js"></script>
+  <script type="text/javascript" src="game/star.js"></script>
+  <script type="text/javascript" src="game/stage.js"></script>
+  <script type="module" src="connected.js"></script>
+
+  <div id="debug" style="display: none; position: absolute;">
+  <div id="debug-left">
+    <p>Acceleration - Left</p>
+    <pre id="x-left"></pre>
+    <pre id="y-left"></pre>
+    <pre id="z-left"></pre>
+    <meter id="acc-x-left" min="-10" max="10"></meter>
+    <meter id="acc-y-left" min="-10" max="10"></meter>
+    <meter id="acc-z-left" min="-10" max="10"></meter>
+  </div>
+  <div id="debug-right">
+    <p>Acceleration - Right</p>
+    <pre id="x-right"></pre>
+    <pre id="y-right"></pre>
+    <pre id="z-right"></pre>
+    <meter id="acc-x-right" min="-10" max="10"></meter>
+    <meter id="acc-y-right" min="-10" max="10"></meter>
+    <meter id="acc-z-right" min="-10" max="10"></meter>
+    </div>
+  </div>
+</body>
+</html>

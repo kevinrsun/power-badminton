@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 const connectJoyCon = async () => {
-  console.log("Triggered");
   // Filter on devices with the Nintendo Vendor ID.
   const filters = [
     {

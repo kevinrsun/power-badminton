@@ -1,4 +1,4 @@
-export default class Birdie {
+class Birdie {
 
     constructor(p5, spriteImage) {
         this.p5 = p5;

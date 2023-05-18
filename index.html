@@ -3,9 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Power Badminton</title>
-  <script src="./libs/p5.js"></script>
-  <script src="./libs/p5.sound.min.js"></script>
-  <link rel="stylesheet" href="styles/test.css" />
+  <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/joy-cons.css" />
   <style>
     html,
@@ -14,32 +12,14 @@
       padding: 0;
       overflow: hidden;
     }
-
-    canvas {
-      position:absolute;
-      top:0;
-      left:0;
-      z-index:-1;
-    }
   </style>
 </head>
 <body oncontextmenu="return false;">
-  <script type="text/javascript" src="simple.js"></script>
-  <!-- <script type="module" src="index.js"></script> -->
+  <!-- <script type="text/javascript" src="simple.js"></script> -->
+  <script type="module" src="index.js"></script>
 
   <startpage id="start-page">
   <h1 class="main_heading">Power Badminton</h1>
-
-  <h2>Rules Of The Game</h2>
-  <ul class="list">
-    <li> Multiplayer game, choose from either birdy or piggy. There are huge varieties present in the game</li>
-    <li> 3 different types of Shots including clear (back to back), drop (front to front) and intermediate</li>
-    <li> Each player has total of 5 eggs, you lose once all of your eggs are broken</li>
-
-    <li> Faults include Net, outside of the playground but you dont lose your eggs with these faults</li>
-    <li> You lose your egg if the shuttle lands on your side of the court</li>
-    <li> You can jump and move anywhere in the court</li>
-  </ul>
 
   <h1>CONTROLS<h1>
   <div id="flex">
@@ -63,9 +43,9 @@
   </div>
 
   <!-- Joycon Visual -->
-  <figure>
+  <!-- <figure>
     <div id="joycon-l" class="joycon productId8198">
-      <!-- <div id="joystick-left" class="joystick"></div> -->
+      <div id="joystick-left" class="joystick"></div>
       <div class="buttons">
         <button id="up"></button>
         <button id="left"></button>
@@ -88,13 +68,44 @@
       <i id="home"></i>
       <strong class="back-buttons" id="r"></strong>
     </div>
-  </figure>
+  </figure> -->
+
+  <!-- Joycon Debug -->
+  <!-- <div id="debug">
+  <div id="debug-left">
+    <pre></pre>
+    <p>Acceleration</p>
+    <meter id="acc-x" min="-1" max="1"></meter>
+    <meter id="acc-y" min="-1" max="1"></meter>
+    <meter id="acc-z" min="-1" max="1"></meter>
+    <br />
+    <p>Gyroscope</p>
+    <meter id="gyr-x" min="-1" max="1"></meter>
+    <meter id="gyr-y" min="-1" max="1"></meter>
+    <meter id="gyr-z" min="-1" max="1"></meter>
+  </div>
+
+  <div id="debug-right">
+    <pre></pre>
+    <p>Acceleration</p>
+    <meter id="acc-x" min="-1" max="1"></meter>
+    <meter id="acc-y" min="-1" max="1"></meter>
+    <meter id="acc-z" min="-1" max="1"></meter>
+    <br />
+    <p>Gyroscope</p>
+    <meter id="gyr-x" min="-1" max="1"></meter>
+    <meter id="gyr-y" min="-1" max="1"></meter>
+    <meter id="gyr-z" min="-1" max="1"></meter>
+    <p>RingCon Strain</p>
+    <meter id="rc-st" min="0" max="5000"></meter>
+  </div>
+  </div> -->
 
   <!-- Start Page Buttons -->
   <!-- <button id="connect-joy-cons" type="button" class="heading btn button">Connect Joy-Con</button> -->
   <div id='container'>
-  <button class="heading btn button">Connect Joy-Con</button>
-  <button id="play-game-button" onclick="startGame" class="heading btn button">Play Game</button>
+  <button id="connect-joy-cons" class="heading btn button">Connect Joy-Con</button>
+  <a href="game.html" class="heading btn button">PLAY GAME</a>
   </div>
 
   </startpage>

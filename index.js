@@ -4,7 +4,7 @@ import {
   JoyConLeft,
   JoyConRight,
   GeneralController,
-} from './libs/webhid.js';
+} from './libs/joycon/webhid.js';
 
 const connectButton = document.querySelector('#connect-joy-cons');
 const connectButtonRingCon = document.querySelector('#connect-ring-con');
@@ -90,7 +90,7 @@ const visualize = (joyCon, packet) => {
       .querySelector('#joystick-right')
       .classList.toggle('highlight', buttons.rightStick);
 
-    document.querySelector('#rc-st').value = ringCon.strain;
+    // document.querySelector('#rc-st').value = ringCon.strain;
   }
 
   // test led and rumble
@@ -108,33 +108,33 @@ const visualize = (joyCon, packet) => {
     joyCon.rumble(600, 600, 0.5);
   }
 
-  // if (showDebug.checked) {
-  //   const controller = joyCon instanceof JoyConLeft ? debugLeft : debugRight;
-  //   controller.querySelector('pre').textContent =
-  //     JSON.stringify(orientation, null, 2) +
-  //     '\n' +
-  //     JSON.stringify(orientationQuaternion, null, 2) +
-  //     '\n' +
-  //     JSON.stringify(gyroscope, null, 2) +
-  //     '\n' +
-  //     JSON.stringify(accelerometer, null, 2) +
-  //     '\n';
-  //   const meterMultiplier = 300;
-  //   controller.querySelector('#acc-x').value =
-  //     accelerometer.x * meterMultiplier;
-  //   controller.querySelector('#acc-y').value =
-  //     accelerometer.y * meterMultiplier;
-  //   controller.querySelector('#acc-z').value =
-  //     accelerometer.z * meterMultiplier;
+  if (true) {
+    const controller = joyCon instanceof JoyConLeft ? debugLeft : debugRight;
+    controller.querySelector('pre').textContent =
+      JSON.stringify(orientation, null, 2) +
+      '\n' +
+      JSON.stringify(orientationQuaternion, null, 2) +
+      '\n' +
+      JSON.stringify(gyroscope, null, 2) +
+      '\n' +
+      JSON.stringify(accelerometer, null, 2) +
+      '\n';
+    const meterMultiplier = 300;
+    controller.querySelector('#acc-x').value =
+      accelerometer.x * meterMultiplier;
+    controller.querySelector('#acc-y').value =
+      accelerometer.y * meterMultiplier;
+    controller.querySelector('#acc-z').value =
+      accelerometer.z * meterMultiplier;
 
-  //   const gyroscopeMultiplier = 300;
-  //   controller.querySelector('#gyr-x').value =
-  //     gyroscope.rps.x * gyroscopeMultiplier;
-  //   controller.querySelector('#gyr-y').value =
-  //     gyroscope.rps.y * gyroscopeMultiplier;
-  //   controller.querySelector('#gyr-z').value =
-  //     gyroscope.rps.z * gyroscopeMultiplier;
-  // }
+    const gyroscopeMultiplier = 300;
+    controller.querySelector('#gyr-x').value =
+      gyroscope.rps.x * gyroscopeMultiplier;
+    controller.querySelector('#gyr-y').value =
+      gyroscope.rps.y * gyroscopeMultiplier;
+    controller.querySelector('#gyr-z').value =
+      gyroscope.rps.z * gyroscopeMultiplier;
+  }
 };
 
 // Joy-Cons may sleep until touched, so attach the listener dynamically.
@@ -148,8 +148,6 @@ setInterval(async () => {
     joyCon.addEventListener('hidinput', (event) => {
       visualize(joyCon, event.detail);
     });
-
-    connectButtonRingCon.onclick = async () => await joyCon.enableRingCon();
   }
 }, 2000);
 
