@@ -95,7 +95,6 @@ function draw() {
           stars[i].display();
         }
       } else {
-        console.log();
         
         // plane(3400, 2600);
 
